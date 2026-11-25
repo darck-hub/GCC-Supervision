@@ -1,0 +1,26 @@
+services:
+  gcc-supervision:
+    build: .
+    container_name: gcc-supervision-app
+    ports:
+      - "8443:8443"
+    environment:
+      - GCC_ENV=development
+      - GCC_USE_HTTPS=true
+      - GCC_JWT_SECRET=${GCC_JWT_SECRET:-}
+      - GCC_WEBHOOK_SECRET=${GCC_WEBHOOK_SECRET:-}
+    volumes:
+      - gcc_data:/app/data
+      - gcc_certs:/app/certs
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+volumes:
+  gcc_data:
+  gcc_certs:

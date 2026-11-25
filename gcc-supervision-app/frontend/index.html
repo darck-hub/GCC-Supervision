@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GCC Supervision — Plateforme de Pilotage &amp; Sécurité Opérationnelle</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <!-- Écran de connexion sécurisé -->
+  <section id="login-view" class="login-screen">
+    <div class="login-card">
+      <div class="brand-header">
+        <span class="brand-badge">GCC • 24/7 • 3/8</span>
+        <h1>Supervision GCC</h1>
+        <p class="subtitle">Centre de Pilotage Multi-Client &amp; Plateau Banque</p>
+      </div>
+
+      <form id="login-form" class="form-stack" autocomplete="off">
+        <div class="field">
+          <label for="login-username">Identifiant opérateur</label>
+          <input id="login-username" name="username" type="text" required maxlength="64" placeholder="ex: pilote ou admin">
+        </div>
+        <div class="field">
+          <label for="login-password">Mot de passe</label>
+          <input id="login-password" name="password" type="password" required maxlength="128" placeholder="••••••••••••">
+        </div>
+        <div id="login-error" class="alert-box alert-error hidden" role="alert"></div>
+        <button type="submit" class="btn btn-primary btn-full">Connexion sécurisée (JWT RAM)</button>
+      </form>
+
+      <div class="security-notice">
+        <strong>Protection active :</strong> TLS 1.2+ • JWT stocké en RAM uniquement (expiration 15 min) • Protection CSRF <code>X-GCC-CSRF</code> • Rate Limiting anti brute-force.
+      </div>
+      <div class="demo-hint">
+        <p><strong>Comptes de démonstration (environnement dev) :</strong></p>
+        <ul>
+          <li><code>admin</code> / <code>AdminGcc!2026#Sec</code> (Administrateur)</li>
+          <li><code>pilote</code> / <code>PiloteN1!2026#Gcc</code> (Pilote N1 — Shift 3/8)</li>
+          <li><code>tech_n2</code> / <code>SupportN2!2026#Op</code> (Support N2)</li>
+          <li><code>auditeur</code> / <code>AuditCnil!2026#Ok</code> (Auditeur CNIL)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Application principale NOC -->
+  <div id="app-shell" class="app-shell hidden">
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="status-dot dot-ok"></div>
+        <div>
+          <div class="brand-title">GCC Supervision</div>
+          <div class="brand-meta">ANSSI • CNIL • WAL</div>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav" aria-label="Navigation principale">
+        <button class="nav-item active" data-view="dashboard">Tableau de bord</button>
+        <button class="nav-item" data-view="routing">Matrice de routage</button>
+        <button class="nav-item" data-view="incidents">Registre incidents</button>
+        <button class="nav-item" data-view="sheet" id="nav-sheet-btn">Fiche d'exploitation</button>
+        <button class="nav-item" data-view="admin" id="nav-admin-btn">Administration</button>
+        <button class="nav-item" data-view="compliance">Conformité &amp; PCA</button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="shift-box">
+          <div class="shift-label">Équipe 3/8 active</div>
+          <div id="shift-name" class="shift-value">—</div>
+          <div id="shift-slot" class="shift-slot">—</div>
+        </div>
+      </div>
+    </aside>
+
+    <div class="main-area">
+      <header class="topbar">
+        <div class="topbar-left">
+          <h2 id="view-title">Tableau de bord temps réel</h2>
+          <span id="live-clock" class="clock-pill">UTC --:--:--</span>
+        </div>
+        <div class="topbar-right">
+          <span id="session-timer" class="session-pill" title="Expiration automatique de session (CNIL)">Session: 15:00</span>
+          <span id="user-badge" class="user-pill">—</span>
+          <button id="refresh-btn" class="btn btn-secondary btn-sm">Actualiser</button>
+          <button id="logout-btn" class="btn btn-danger btn-sm">Déconnexion</button>
+        </div>
+      </header>
+
+      <div id="toast-container" class="toast-container" aria-live="polite"></div>
+
+      <main id="main-content" class="content-pane"></main>
+    </div>
+  </div>
+
+  <!-- Bandeau d'information RGPD / CNIL -->
+  <div id="rgpd-banner" class="rgpd-banner hidden" role="region" aria-label="Information vie privée">
+    <div>
+      <strong>Conformité RGPD / CNIL :</strong> Cette plateforme n'utilise aucun cookie publicitaire ou traceur tiers. Les jetons d'authentification sont conservés exclusivement en mémoire vive (RAM) et automatiquement détruits après 15 minutes ou à la fermeture de l'onglet.
+    </div>
+    <button id="rgpd-accept-btn" class="btn btn-primary btn-sm">Compris</button>
+  </div>
+
+  <script type="module" src="/js/app.js"></script>
+</body>
+</html>
