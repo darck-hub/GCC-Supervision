@@ -90,4 +90,3 @@ ruff check backend scripts tests
 bandit -r backend scripts -ll
 ```
 
-Pour le détail des schémas Mermaid et des 7 couches de sécurité, consultez [ARCHITECTURE.md](ARCHITECTURE.md).
